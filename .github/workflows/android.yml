@@ -57,7 +57,7 @@ jobs:
           arch: x86_64
           profile: ${{ github.event.inputs.android_emulator || 'pixel_5' }}
           script: |
-            adb install ./app/Android-NativeDemoApp-0.4.0.apk
+            adb install ./apks/Android-NativeDemoApp-0.4.0.apk
             npm run android
 
       - name: Gerar relatório Allure
