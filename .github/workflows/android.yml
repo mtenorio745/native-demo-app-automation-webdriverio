@@ -1,6 +1,8 @@
 name: Testes Android
 
 on:
+  push:
+    branches: [ main ]    
   workflow_dispatch:
     inputs:
       android_emulator:
@@ -89,4 +91,4 @@ jobs:
       - name: Publicar no GitHub Pages
         if: always()
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
