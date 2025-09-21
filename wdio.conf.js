@@ -1,5 +1,3 @@
-import { TimelineReporter } from 'allure-js-commons';
-
 exports.config = {
     //
     // ====================
