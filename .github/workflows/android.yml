@@ -57,8 +57,8 @@ jobs:
           arch: x86_64
           profile: ${{ github.event.inputs.android_emulator || 'pixel_5' }}
           script: |
-            adb install ./apks/android.wdio.native.app.v1.0.8.apk
-            npm run android
+            adb install ./apks/android.native.app.v1.0.8.apk
+            npm run wdio
 
       - name: Gerar relatório Allure
         if: always()
