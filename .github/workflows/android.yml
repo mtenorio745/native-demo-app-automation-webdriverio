@@ -33,17 +33,16 @@ jobs:
     runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          api-level: ${{ env.API_LEVEL }}
-          packages: |
-            system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}
-            platforms;android-${{ env.API_LEVEL }}
-            build-tools;${{ env.ANDROID_BUILD_TOOLS_VERSION }}
-            platform-tools
-            emulator
+    - name: Setup Android SDK
+    uses: android-actions/setup-android@v3
+    with:
+        api-level: ${{ env.API_LEVEL }}
+        packages: |
+        system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}
+        platforms;android-${{ env.API_LEVEL }}
+        build-tools;${{ env.ANDROID_BUILD_TOOLS_VERSION }}
+        platform-tools
+        emulator
             
       - name: Construir e iniciar o emulador
         run: |
