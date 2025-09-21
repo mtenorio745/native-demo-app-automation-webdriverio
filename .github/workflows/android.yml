@@ -47,7 +47,7 @@ jobs:
             
       - name: Construir e iniciar o emulador
         run: |
-          echo "no" | avdmanager create avd -n ${{ env.EMULATOR_NAME }} --device "${{ env.EMULATOR_NAME }}" --abi "${{ env.ANDROID_TARGET }}/${{ env.ANDROID_ARCH }}" -k "system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}"
+          echo "no" | avdmanager create avd -n ${{ env.EMULATOR_NAME }} --device "Nexus 5" --abi "${{ env.ANDROID_TARGET }}/${{ env.ANDROID_ARCH }}" -k "system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}"
           
       - name: Iniciar o emulador
         run: emulator @${{ env.EMULATOR_NAME }} &
