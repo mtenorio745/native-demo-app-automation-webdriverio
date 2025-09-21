@@ -1,3 +1,5 @@
+import { TimelineReporter } from 'allure-js-commons';
+
 exports.config = {
     //
     // ====================
@@ -138,8 +140,9 @@ exports.config = {
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: ['spec',['allure', {
         outputDir: 'allure-results',
-        disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: false,        
+        disableWebdriverStepsReporting: false,
+        disableWebdriverScreenshotsReporting: false,
+        disableFileAttachments: false,        
     }]],
 
     // Options to be passed to Mocha.

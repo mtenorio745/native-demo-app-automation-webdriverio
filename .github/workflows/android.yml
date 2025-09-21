@@ -31,6 +31,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Criar executor.json para Allure
+        run: |
+          mkdir -p allure-results
+          echo '{
+            "name": "GitHub Actions",
+            "type": "github",
+            "url": "${{ github.server_url }}/${{ github.repository }}",
+            "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "reportUrl": "${{ steps.deployment.outputs.page_url }}"
+          }' > allure-results/executor.json
+  
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
@@ -45,9 +56,6 @@ jobs:
 
       - name: Instalar dependências
         run: npm i
-
-      - name: Encontrar o arquivo APK
-        run: find . -name "*.apk"
 
       - name: Executar testes Android
         uses: reactivecircus/android-emulator-runner@v2
