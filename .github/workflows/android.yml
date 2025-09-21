@@ -75,7 +75,10 @@ jobs:
       - name: Executar os testes
         run: |
           npm run android
-          
+      
+      - name: Listar arquivos para depuração
+        run: ls -R    
+
       - name: Gerar relatório
         if: always()
         run: |
