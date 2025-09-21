@@ -34,39 +34,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      
+      - name: Executar testes Android
+        uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ env.API_LEVEL }}
-          packages: >
-            system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}
-            platforms;android-${{ env.API_LEVEL }}
-            build-tools;${{ env.ANDROID_BUILD_TOOLS_VERSION }}
-            platform-tools
-            emulator
-            
-      - name: Construir e iniciar o emulador
-        run: |
-          echo "no" | avdmanager create avd -n ${{ env.EMULATOR_NAME }} --device "Nexus 5" --abi "${{ env.ANDROID_TARGET }}/${{ env.ANDROID_ARCH }}" -k "system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}"
-          
-      - name: Iniciar o emulador
-        run: |
-          emulator -avd ${{ env.EMULATOR_NAME }} -no-audio -no-window -no-snapshot &
-
-      - name: Esperar o emulador inicializar
-        run: |
-          adb wait-for-device
-          adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
-
-      - name: Instalar dependências
-        run: npm i
-
-      - name: Instalar APK
-        run: |
-          adb install ./app/Android-NativeDemoApp-0.4.0.apk
-          
-      - name: Executar os testes
-        run: npm run android
+          target: google_apis_playstore
+          arch: x86_64
+          profile: ${{ env.EMULATOR_NAME }}
+          script: |
+            npm i
+            adb install ./app/Android-NativeDemoApp-0.4.0.apk
+            npm run android
 
       - name: Gerar relatório Allure
         if: always()
