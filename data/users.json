@@ -1,0 +1,31 @@
+{
+  "login": {
+    "sucesso": {
+      "username": "test@example.com",
+      "password": "password"
+    },
+    "invalido": {
+      "username": "invalidemail.com",
+      "password": "wrongpassword"
+    }
+  },
+  "cadastro": {
+    "sucesso": {
+      "username": "newuser@example.com",
+      "password": "password123"
+    },
+    "email_invalido": {
+      "username": "emailInvalido",
+      "password": "password123"
+    },
+    "senha_curta": {
+      "username": "valid@email.com",
+      "password": "short"
+    },
+    "senhas_nao_combinam": {
+      "username": "valid@email.com",
+      "password": "password123",
+      "confirmPassword": "differentpassword"
+    }
+  }
+}

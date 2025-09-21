@@ -1,0 +1,14 @@
+[
+    {
+        "text": "my first text",
+        "expected_result": "my first text"
+    },
+    {
+        "text": "second one",
+        "expected_result": "second one"
+    },
+    {
+        "text": "12345",
+        "expected_result": "12345"
+    }
+]
