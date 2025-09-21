@@ -1,5 +1,5 @@
-import SwipeScreen from '../../screen-objects/SwipeScreen';
-import AppScreen from '../../screen-objects/AppScreen';
+const SwipeScreen = require('../../screen-objects/SwipeScreen');
+const AppScreen = require('../../screen-objects/AppScreen');
 
 describe('Cenário de Swipe', () => {
     beforeEach(async () => {
