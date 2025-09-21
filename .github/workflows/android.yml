@@ -25,7 +25,6 @@ env:
   ANDROID_ARCH: x86_64
   ANDROID_TARGET: google_apis
   ANDROID_BUILD_TOOLS_VERSION: 34.0.0-rc4
-  ANDROID_SDK_PACKAGES: system-images;android-32;google_apis;x86_64 platforms;android-32 build-tools;34.0.0-rc4 platform-tools emulator
   EMULATOR_TIMEOUT: 350
   BOOT_TIMEOUT: 700
 
@@ -33,58 +32,44 @@ jobs:
   android:
     runs-on: macos-13
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Adicionar avdmanager e sdkmanager ao PATH
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          api-level: ${{ env.API_LEVEL }}
+          packages: |
+            system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}
+            platforms;android-${{ env.API_LEVEL }}
+            build-tools;${{ env.ANDROID_BUILD_TOOLS_VERSION }}
+            platform-tools
+            emulator
+            
+      - name: Construir e iniciar o emulador
         run: |
-          echo "$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/${{ env.ANDROID_BUILD_TOOLS_VERSION }}" >> $GITHUB_PATH
-      
-      - name: Instalar SDK
-        run: |
-            for i in `seq 1 10`; do
-            yes | sdkmanager --licenses > /dev/null
-            if [ $? -eq 0 ]; then
-                break
-            fi
-            sleep 10
-            done
-            sdkmanager --install ${ANDROID_SDK_PACKAGES}
-
-      - name: Construir o emulador
-        run: |
-          echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --device "$EMULATOR_NAME" --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
-
-      - name: Iniciar o emulador
-        run: |
+          echo "no" | avdmanager --verbose create avd --force -n ${{ env.EMULATOR_NAME }} --device "${{ env.EMULATOR_NAME }}" --abi "${{ env.ANDROID_TARGET }}/${{ env.ANDROID_ARCH }}" -k "system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}"
           chmod +x ./sscript/start_emu.sh
           ./sscript/start_emu.sh
-
-      - name: Instalar dependências
-        run: |
-          npm i
-
-      - name: Instalar allure
-        run: npm install -g allure-commandline
-
-      - name: Checar o status do emulador
-        run: |
           chmod a+x ./sscript/check_emu.sh
           ./sscript/check_emu.sh
-     
+
+      - name: Instalar dependências
+        run: npm i
+
       - name: Instalar APK
         run: |
           adb shell dumpsys window 2>/dev/null | grep -i mCurrentFocus
           adb install ./app/Android-NativeDemoApp-0.4.0.apk
           chmod a+x ./sscript/mainActivityCheck.sh
           ./sscript/mainActivityCheck.sh
-
+          
       - name: Executar os testes
-        run: |
-          npm run android
-      
-      - name: Listar arquivos para depuração
-        run: ls -R    
+        run: npm run android
 
+      - name: Instalar allure-commandline
+        if: always()
+        run: npm install -g allure-commandline
+          
       - name: Gerar relatório
         if: always()
         run: |
