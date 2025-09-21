@@ -14,7 +14,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
     "@faker-js/faker": "^10.0.0",
     "@wdio/allure-reporter": "^9.19.2",
