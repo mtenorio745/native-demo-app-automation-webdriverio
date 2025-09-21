@@ -1,4 +1,4 @@
-const AppScreen = require('../../screen-objects/AppScreen');
+import AppScreen from '../../screen-objects/AppScreen';
 
 describe('Cenário de Navegação', () => {
   it('deve navegar por todas as abas do aplicativo e verificar os títulos das telas', async () => {

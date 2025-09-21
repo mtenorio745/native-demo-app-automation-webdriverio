@@ -1,5 +1,5 @@
-const LoginScreen = require('../../screen-objects/LoginScreen');
-const users = require('../../data/users.json');
+import LoginScreen from '../../screen-objects/LoginScreen';
+import users from '../../data/users.json';
 
 describe('Cenário de Cadastro', () => {
   beforeEach(async () => {

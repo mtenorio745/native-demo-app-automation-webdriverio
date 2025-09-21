@@ -1,6 +1,6 @@
-const FormsScreen = require('../../screen-objects/FormsScreen');
-const AppScreen = require('../../screen-objects/AppScreen');
-const formsData = require('../../data/forms_data.json');
+import AppScreen from '../../screen-objects/AppScreen';
+import FormsScreen from '../../screen-objects/FormsScreen';
+import formsData from '../../data/forms_data.json';
 
 describe('Cenário de Formulários', () => {
   beforeEach(async () => {
