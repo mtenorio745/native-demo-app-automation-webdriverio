@@ -41,8 +41,14 @@ jobs:
       
       - name: Instalar SDK
         run: |
-          yes Y | sdkmanager --licenses
-          sdkmanager --install ${ANDROID_SDK_PACKAGES}
+            for i in `seq 1 10`; do
+            yes | sdkmanager --licenses > /dev/null
+            if [ $? -eq 0 ]; then
+                break
+            fi
+            sleep 10
+            done
+            sdkmanager --install ${ANDROID_SDK_PACKAGES}
 
       - name: Construir o emulador
         run: |
