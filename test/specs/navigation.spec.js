@@ -1,7 +1,10 @@
 const AppScreen = require('../../screen-objects/AppScreen');
 
 describe('Cenário de Navegação', () => {
+    allure.epic('Navegação');
+    allure.feature('Fluxo de Telas');
   it('deve navegar por todas as abas do aplicativo e verificar os títulos das telas', async () => {
+    allure.story('Cenário de Sucesso');
     // Navegar para a aba Webview e esperar pelo texto de carregamento e depois pelo título da página
     await AppScreen.webviewTab.click();
     const webviewLoading = await $('//android.widget.TextView[@text="LOADING..."]');

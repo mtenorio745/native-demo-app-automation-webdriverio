@@ -26,12 +26,12 @@ env:
   ANDROID_BUILD_TOOLS_VERSION: 34.0.0
 
 jobs:
-  android:
+  mobile-e2e-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Criar executor.json para Allure
+      - name: Configurar Relatório Allure
         run: |
           mkdir -p allure-results
           echo '{
@@ -42,13 +42,13 @@ jobs:
             "reportUrl": "${{ steps.deployment.outputs.page_url }}"
           }' > allure-results/executor.json
   
-      - name: Setup JDK
+      - name: Configurar Ambiente Java
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Habilitar KVM
+      - name: Habilitar Aceleração KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
@@ -57,7 +57,7 @@ jobs:
       - name: Instalar dependências
         run: npm i
 
-      - name: Executar testes Android
+      - name: Executar Testes E2E	
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ env.API_LEVEL }}
