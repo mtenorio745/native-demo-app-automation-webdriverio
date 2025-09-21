@@ -50,10 +50,13 @@ jobs:
           echo "no" | avdmanager create avd -n ${{ env.EMULATOR_NAME }} --device "Nexus 5" --abi "${{ env.ANDROID_TARGET }}/${{ env.ANDROID_ARCH }}" -k "system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}"
           
       - name: Iniciar o emulador
-        run: emulator @${{ env.EMULATOR_NAME }} &
+        run: |
+          emulator -avd ${{ env.EMULATOR_NAME }} -no-audio -no-window -no-snapshot &
 
       - name: Esperar o emulador inicializar
-        run: adb wait-for-device
+        run: |
+          adb wait-for-device
+          adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'
 
       - name: Instalar dependências
         run: npm i
