@@ -47,7 +47,7 @@ jobs:
         run: npm i
 
       - name: Encontrar o arquivo APK
-        run: ls -R
+        run: find . -name "*.apk"
 
       - name: Executar testes Android
         uses: reactivecircus/android-emulator-runner@v2
