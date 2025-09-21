@@ -2,14 +2,14 @@ name: Testes Android
 
 on:
   push:
-    branches: [ main ]    
+    branches: [main]
   workflow_dispatch:
     inputs:
       android_emulator:
         type: choice
         description: Selecione um emulador Android
         required: true
-        options: 
+        options:
           - Nexus_5
           - Nexus_6
         default: Nexus_5
@@ -38,54 +38,43 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           api-level: ${{ env.API_LEVEL }}
-          packages:
-            - system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}
-            - platforms;android-${{ env.API_LEVEL }}
-            - build-tools;${{ env.ANDROID_BUILD_TOOLS_VERSION }}
-            - platform-tools
-            - emulator
+          packages: >
+            system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}
+            platforms;android-${{ env.API_LEVEL }}
+            build-tools;${{ env.ANDROID_BUILD_TOOLS_VERSION }}
+            platform-tools
+            emulator
             
       - name: Construir e iniciar o emulador
         run: |
-          echo "no" | avdmanager --verbose create avd --force -n ${{ env.EMULATOR_NAME }} --device "${{ env.EMULATOR_NAME }}" --abi "${{ env.ANDROID_TARGET }}/${{ env.ANDROID_ARCH }}" -k "system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}"
-          chmod +x ./sscript/start_emu.sh
-          ./sscript/start_emu.sh
-          chmod a+x ./sscript/check_emu.sh
-          ./sscript/check_emu.sh
+          echo "no" | avdmanager create avd -n ${{ env.EMULATOR_NAME }} --device "${{ env.EMULATOR_NAME }}" --abi "${{ env.ANDROID_TARGET }}/${{ env.ANDROID_ARCH }}" -k "system-images;android-${{ env.API_LEVEL }};${{ env.ANDROID_TARGET }};${{ env.ANDROID_ARCH }}"
+          
+      - name: Iniciar o emulador
+        run: emulator @${{ env.EMULATOR_NAME }} &
+
+      - name: Esperar o emulador inicializar
+        run: adb wait-for-device
 
       - name: Instalar dependências
         run: npm i
 
       - name: Instalar APK
         run: |
-          adb shell dumpsys window 2>/dev/null | grep -i mCurrentFocus
           adb install ./app/Android-NativeDemoApp-0.4.0.apk
-          chmod a+x ./sscript/mainActivityCheck.sh
-          ./sscript/mainActivityCheck.sh
           
       - name: Executar os testes
         run: npm run android
 
-      - name: Instalar allure-commandline
-        if: always()
-        run: npm install -g allure-commandline
-          
-      - name: Gerar relatório
+      - name: Gerar relatório Allure
         if: always()
         run: |
+          npm install -g allure-commandline
           npx allure generate allure-results --clean -o allure-report
           
-      - name: Configurar GitHub Pages
-        if: always()
-        uses: actions/configure-pages@v4
-        
-      - name: Upload do artefato
+      - name: Configurar e publicar no GitHub Pages
         if: always()
         uses: actions/upload-pages-artifact@v4
         with:
           path: './allure-report'
-          
-      - name: Publicar no GitHub Pages
-        if: always()
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4
