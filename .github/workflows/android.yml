@@ -1,0 +1,93 @@
+name: Testes Android
+
+on:
+  workflow_dispatch:
+    inputs:
+      android_emulator:
+         type: choice
+         description: Selecione um emulador Android
+         required: true
+         options: 
+            - Nexus 5
+            - Nexus 6
+         default: Nexus 5
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+env:
+  API_LEVEL: 32
+  EMULATOR_NAME: Nexus
+  EMULATOR_DEVICE: ${{ inputs.android_emulator }} 
+  ANDROID_ARCH: x86_64
+  ANDROID_TARGET: google_apis
+  ANDROID_BUILD_TOOLS_VERSION: 34.0.0-rc4
+  ANDROID_SDK_PACKAGES: system-images;android-32;google_apis;x86_64 platforms;android-32 build-tools;34.0.0-rc4 platform-tools emulator
+  EMULATOR_TIMEOUT: 350
+  BOOT_TIMEOUT: 700
+
+jobs:
+  android:
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Adicionar avdmanager e sdkmanager ao PATH
+        run: |
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/${{ env.ANDROID_BUILD_TOOLS_VERSION }}" >> $GITHUB_PATH
+      
+      - name: Instalar SDK
+        run: |
+          yes Y | sdkmanager --licenses
+          sdkmanager --install ${ANDROID_SDK_PACKAGES}
+      
+      - name: Construir o emulador
+        run: |
+          echo "no" | avdmanager --verbose create avd --force -n $EMULATOR_NAME --device "$EMULATOR_DEVICE" --abi "${ANDROID_TARGET}/${ANDROID_ARCH}" -k "system-images;android-${API_LEVEL};${ANDROID_TARGET};${ANDROID_ARCH}"
+      
+      - name: Iniciar o emulador
+        run: |
+          chmod +x ./sscript/start_emu.sh
+          ./sscript/start_emu.sh
+
+      - name: Instalar dependências
+        run: | 
+          npm i
+      
+      - name: Checar o status do emulador
+        run: |
+          chmod a+x ./sscript/check_emu.sh
+          ./sscript/check_emu.sh
+     
+      - name: Instalar APK
+        run: |
+          adb shell dumpsys window 2>/dev/null | grep -i mCurrentFocus
+          adb install ./app/Android-NativeDemoApp-0.4.0.apk
+          chmod a+x ./sscript/mainActivityCheck.sh
+          ./sscript/mainActivityCheck.sh
+
+      - name: Executar os testes
+        run: | 
+          npm run android
+          
+      - name: Gerar relatório
+        if: always()
+        run: | 
+          npx allure generate report/allure-results    
+         
+      - name: Configurar GitHub Pages
+        if: always()
+        uses: actions/configure-pages@v3
+        
+      - name: Upload do artefato
+        if: always()
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './allure-report'
+          
+      - name: Publicar no GitHub Pages
+        if: always()
+        id: deployment
+        uses: actions/deploy-pages@v2
