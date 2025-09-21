@@ -10,9 +10,9 @@ on:
         description: Selecione um emulador Android
         required: true
         options:
-          - Nexus_5
-          - Nexus_6
-        default: Nexus_5
+          - pixel_5
+          - pixel_6
+        default: pixel_5
 
 permissions:
   contents: write
@@ -21,16 +21,13 @@ permissions:
 
 env:
   API_LEVEL: 32
-  EMULATOR_NAME: ${{ inputs.android_emulator || 'Nexus_5' }}
   ANDROID_ARCH: x86_64
   ANDROID_TARGET: google_apis
   ANDROID_BUILD_TOOLS_VERSION: 34.0.0
-  EMULATOR_TIMEOUT: 350
-  BOOT_TIMEOUT: 700
 
 jobs:
   android:
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -39,6 +36,12 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Habilitar KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       
       - name: Executar testes Android
         uses: reactivecircus/android-emulator-runner@v2
@@ -46,7 +49,7 @@ jobs:
           api-level: ${{ env.API_LEVEL }}
           target: google_apis_playstore
           arch: x86_64
-          profile: ${{ env.EMULATOR_NAME }}
+          profile: ${{ github.event.inputs.android_emulator || 'pixel_5' }}
           script: |
             npm i
             adb install ./app/Android-NativeDemoApp-0.4.0.apk
@@ -58,7 +61,7 @@ jobs:
           npm install -g allure-commandline
           npx allure generate allure-results --clean -o allure-report
           
-      - name: Configurar e publicar no GitHub Pages
+      - name: Publicar no GitHub Pages
         if: always()
         uses: actions/upload-pages-artifact@v4
         with:
