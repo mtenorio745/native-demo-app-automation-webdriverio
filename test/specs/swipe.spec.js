@@ -1,5 +1,5 @@
-const SwipeScreen = require('../../screen-objects/SwipeScreen');
-const AppScreen = require('../../screen-objects/AppScreen');
+import SwipeScreen from '../../screen-objects/SwipeScreen';
+import AppScreen from '../../screen-objects/AppScreen';
 
 describe('Cenário de Swipe', () => {
     allure.epic('Navegação');
