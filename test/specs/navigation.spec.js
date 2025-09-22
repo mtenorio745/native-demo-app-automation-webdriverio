@@ -3,7 +3,7 @@ import { addEpic, addFeature, addStory } from '@wdio/allure-reporter';
 
 describe('Cenário de Navegação', () => {
     addEpic('Navegação');
-    allure.feature('Fluxo de Telas');
+    addFeature('Fluxo de Telas');
   it('deve navegar por todas as abas do aplicativo e verificar os títulos das telas', async () => {
     addStory('Cenário de Sucesso');
     // Navegar para a aba Webview e esperar pelo texto de carregamento e depois pelo título da página
