@@ -36,10 +36,12 @@ jobs:
           mkdir -p allure-results
           echo '{
             "name": "GitHub Actions",
-            "type": "github",
-            "url": "${{ github.server_url }}/${{ github.repository }}",
+            "buildOrder": 745,
+            "type": "GitHub Actions",
+            "url": "https://mtenorio745.github.io/native-demo-app-automation-webdriverio/#",
             "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-            "reportName": "Relatório de Testes E2E"
+            "reportName": "Relatório de Testes E2E",
+            "buildName": "Workflow Build",
           }' > allure-results/executor.json
   
       - name: Configurar Ambiente Java
