@@ -38,7 +38,7 @@ jobs:
             "name": "GitHub Actions",
             "type": "github",
             "url": "https://mtenorio745.github.io/native-demo-app-automation-webdriverio/#",
-            "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "buildUrl": "'"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"'",
             "reportName": "Relatório de Testes E2E",
             "buildName": "Workflow Build",
             "reportUrl": "https://mtenorio745.github.io/native-demo-app-automation-webdriverio/#"
