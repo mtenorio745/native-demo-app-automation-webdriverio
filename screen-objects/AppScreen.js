@@ -45,4 +45,4 @@ class AppScreen {
   }
 }
 
-module.exports = new AppScreen();
+export default new AppScreen();

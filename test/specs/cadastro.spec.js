@@ -1,7 +1,9 @@
-const LoginScreen = require('../../screen-objects/LoginScreen');
-const users = require('../../data/users.json');
+import LoginScreen from '../../screen-objects/LoginScreen';
+import users from '../../data/users.json';
 
 describe('Cenário de Cadastro', () => {
+    allure.epic('Autenticação');
+    allure.feature('Cadastro');
   beforeEach(async () => {
     const loginTabButton = $('~Login');
     await loginTabButton.click();
@@ -11,6 +13,7 @@ describe('Cenário de Cadastro', () => {
   });
 
   it('deve realizar cadastro com sucesso', async () => {
+     allure.story('Cenário de Sucesso');
     const user = users.cadastro.sucesso;
     await LoginScreen.performSignUp(user.username, user.password, user.password);
     const successTitle = await $('//android.widget.TextView[@resource-id="android:id/alertTitle"]');
@@ -21,6 +24,7 @@ describe('Cenário de Cadastro', () => {
   });
   
   it('deve falhar com e-mail inválido', async () => {
+    allure.story('Cenário Negativo');
     const user = users.cadastro.email_invalido;
     await LoginScreen.performSignUp(user.username, user.password, user.password);
     const errorMessage = await $('//android.widget.TextView[@text="Please enter a valid email address"]');
@@ -28,6 +32,7 @@ describe('Cenário de Cadastro', () => {
   });
   
   it('deve falhar com senha menor que 8 caracteres', async () => {
+    allure.story('Cenário Negativo');
     const user = users.cadastro.senha_curta;
     await LoginScreen.performSignUp(user.username, user.password, user.password);
     const errorMessage = await $('//android.widget.TextView[@text="Please enter at least 8 characters"]');
@@ -35,6 +40,7 @@ describe('Cenário de Cadastro', () => {
   });
   
   it('deve falhar com confirmação de senha diferente', async () => {
+    allure.story('Cenário Negativo');
     const user = users.cadastro.senhas_nao_combinam;
     await LoginScreen.performSignUp(user.username, user.password, user.confirmPassword);
     const errorMessage = await $('//android.widget.TextView[@text="Please enter the same password"]');

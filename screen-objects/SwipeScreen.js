@@ -99,4 +99,4 @@ async performSwipeLeft() {
 
 
 
-module.exports = new SwipeScreen();
+export default new SwipeScreen();

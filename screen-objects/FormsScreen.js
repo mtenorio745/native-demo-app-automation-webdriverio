@@ -45,4 +45,4 @@ class FormsScreen {
   }
 }
 
-module.exports = new FormsScreen();
+export default new FormsScreen();

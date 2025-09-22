@@ -50,4 +50,4 @@ class LoginScreen {
   }
 }
 
-module.exports = new LoginScreen();
+export default new LoginScreen();

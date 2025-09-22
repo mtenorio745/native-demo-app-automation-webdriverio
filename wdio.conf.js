@@ -1,4 +1,4 @@
-exports.config = {
+export const config = {
     //
     // ====================
     // Runner Configuration
@@ -54,7 +54,8 @@ exports.config = {
         'appium:automationName': 'UiAutomator2',
         'appium:deviceName': 'Pixel 8 PRO',
         'appium:platformVersion': '14',
-        'appium:app': 'https://github.com/webdriverio/native-demo-app/releases/download/v1.0.8/android.wdio.native.app.v1.0.8.apk'
+        'appium:app': './apks/android.wdio.native.app.v1.0.8.apk',
+        'appium:appWaitActivity': 'com.wdiodemoapp.MainActivity'
     }//, 
     //{
         // Capabilities para simulador iOS
@@ -113,7 +114,14 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['appium'],
+    services: [
+        ['appium', {
+          args: {
+            relaxedSecurity: true,
+            logLevel: 'info'
+          }
+        }]
+    ], 
 
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -140,7 +148,13 @@ exports.config = {
         outputDir: 'allure-results',
         disableWebdriverStepsReporting: false,
         disableWebdriverScreenshotsReporting: false,
-        disableFileAttachments: false,        
+        disableFileAttachments: false,
+        reportedEnvironmentVars: {
+            os_platform: os.platform(),
+            os_release: os.release(),
+            os_version: os.version(),
+            node_version: process.version,
+        },        
     }]],
 
     // Options to be passed to Mocha.
@@ -163,8 +177,8 @@ exports.config = {
      * @param {object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function (config, capabilities) {
+     },
     /**
      * Gets executed before a worker process is spawned and can be used to initialize specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -309,8 +323,8 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    // },
+    onComplete: function(exitCode, config, capabilities, results) {
+    },
     /**
     * Gets executed when a refresh happens.
     * @param {string} oldSessionId session ID of the old session
