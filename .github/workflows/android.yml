@@ -39,7 +39,7 @@ jobs:
             "type": "github",
             "url": "${{ github.server_url }}/${{ github.repository }}",
             "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-            "reportUrl": "${{ steps.deployment.outputs.page_url }}"
+            "reportName": "Relatório de Testes E2E"
           }' > allure-results/executor.json
   
       - name: Configurar Ambiente Java
