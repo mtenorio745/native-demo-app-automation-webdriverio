@@ -1,5 +1,6 @@
 import SwipeScreen from '../../screen-objects/SwipeScreen';
 import AppScreen from '../../screen-objects/AppScreen';
+import { addEpic, addFeature, addStory } from '@wdio/allure-reporter';
 
 describe('Cenário de Swipe', () => {
     allure.epic('Navegação');

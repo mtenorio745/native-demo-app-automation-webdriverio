@@ -1,4 +1,5 @@
 import AppScreen from '../../screen-objects/AppScreen';
+import { addEpic, addFeature, addStory } from '@wdio/allure-reporter';
 
 describe('Cenário de Navegação', () => {
     allure.epic('Navegação');

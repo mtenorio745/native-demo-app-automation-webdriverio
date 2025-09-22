@@ -1,5 +1,6 @@
 import LoginScreen from '../../screen-objects/LoginScreen';
 import users from '../../data/users.json';
+import { addEpic, addFeature, addStory } from '@wdio/allure-reporter';
 
 describe('Cenário de Login', () => {
     allure.epic('Autenticação');

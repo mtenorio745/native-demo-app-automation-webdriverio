@@ -1,6 +1,7 @@
 import FormsScreen from '../../screen-objects/FormsScreen';
 import AppScreen from '../../screen-objects/AppScreen';
 import formsData from '../../data/forms_data.json';
+import { addEpic, addFeature, addStory } from '@wdio/allure-reporter';
 
 describe('Cenário de Formulários', () => {
     allure.epic('Formulários');
