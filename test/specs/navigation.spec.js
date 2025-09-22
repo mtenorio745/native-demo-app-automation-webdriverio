@@ -2,10 +2,10 @@ import AppScreen from '../../screen-objects/AppScreen';
 import { addEpic, addFeature, addStory } from '@wdio/allure-reporter';
 
 describe('Cenário de Navegação', () => {
-    allure.epic('Navegação');
+    addEpic('Navegação');
     allure.feature('Fluxo de Telas');
   it('deve navegar por todas as abas do aplicativo e verificar os títulos das telas', async () => {
-    allure.story('Cenário de Sucesso');
+    addStory('Cenário de Sucesso');
     // Navegar para a aba Webview e esperar pelo texto de carregamento e depois pelo título da página
     await AppScreen.webviewTab.click();
     const webviewLoading = await $('//android.widget.TextView[@text="LOADING..."]');

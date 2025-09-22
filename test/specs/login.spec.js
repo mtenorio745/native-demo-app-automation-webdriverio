@@ -3,8 +3,8 @@ import users from '../../data/users.json';
 import { addEpic, addFeature, addStory } from '@wdio/allure-reporter';
 
 describe('Cenário de Login', () => {
-    allure.epic('Autenticação');
-    allure.feature('Login');
+    addEpic('Autenticação');
+    addFeature('Login');
   beforeEach(async () => {
     const loginTabButton = $('~Login');
     await loginTabButton.click();
@@ -12,7 +12,7 @@ describe('Cenário de Login', () => {
   });
 
   it('deve realizar login com sucesso', async () => {
-    allure.story('Cenário de Sucesso');
+    addStory('Cenário de Sucesso');
     const user = users.login.sucesso;
     await LoginScreen.performLogin(user.username, user.password);
     const successTitle = await $('//android.widget.TextView[@resource-id="android:id/alertTitle"]');
@@ -23,7 +23,7 @@ describe('Cenário de Login', () => {
   });
   
   it('deve falhar ao tentar logar com credenciais inválidas', async () => {
-    allure.story('Cenário Negativo');
+    addStory('Cenário Negativo');
     const user = users.login.invalido;
     await LoginScreen.performLogin(user.username, user.password);
     const errorMessage = await $('//android.widget.TextView[@text="Please enter a valid email address"]');

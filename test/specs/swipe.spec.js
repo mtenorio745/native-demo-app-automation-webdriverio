@@ -3,15 +3,15 @@ import AppScreen from '../../screen-objects/AppScreen';
 import { addEpic, addFeature, addStory } from '@wdio/allure-reporter';
 
 describe('Cenário de Swipe', () => {
-    allure.epic('Navegação');
-    allure.feature('Gestos');
+    addEpic('Navegação');
+    addFeature('Gestos');
     beforeEach(async () => {
         await AppScreen.swipeTab.click();
         await SwipeScreen.waitForIsShown();
     });
 
     it('deve navegar pelos cards com swipes horizontais', async () => {
-        allure.story('Cenário de Interação');
+        addStory('Cenário de Interação');
         const swipeTitle = await $('//android.widget.TextView[@text="Swipe horizontal"]');
         await expect(swipeTitle).toBeDisplayed();
 
