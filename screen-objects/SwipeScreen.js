@@ -97,6 +97,4 @@ async performSwipeLeft() {
 }
 }
 
-
-
 export default new SwipeScreen();
