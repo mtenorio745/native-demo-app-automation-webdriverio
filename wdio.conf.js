@@ -55,7 +55,7 @@ export const config = {
         'appium:automationName': 'UiAutomator2',
         'appium:deviceName': 'Pixel 8 PRO',
         'appium:platformVersion': '14',
-        'appium:app': `${process.env.GITHUB_WORKSPACE}/apks/android.wdio.native.app.v1.0.8.apk`,
+        'appium:app': `https://github.com/webdriverio/native-demo-app/releases/download/v1.0.8/android.wdio.native.app.v1.0.8.apk`,
         'appium:appWaitActivity': 'com.wdiodemoapp.MainActivity'
     }//, 
     //{
