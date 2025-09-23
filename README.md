@@ -1,72 +1,83 @@
-# Automação E2E para o Native Demo App (WebdriverIO)
+# ✍️ Automação E2E com WebdriverIO para o Native Demo App
 
-![Build Status](https://github.com/mtenorio745/native-demo-app-automation-webdriverio/actions/workflows/android.yml/badge.svg)
-[![Allure Report](https://img.shields.io/badge/Allure_Report-blue?logo=allure)](https://mtenorio745.github.io/native-demo-app-automation-webdriverio/)
+-----
 
-## 📝 Descrição do Projeto
+## 📄 Sobre o Projeto
 
-Este repositório contém uma suíte de testes de automação End-to-End (E2E) para um aplicativo mobile de demonstração. Os testes foram desenvolvidos utilizando o framework **WebdriverIO** e o **Appium** para automação em dispositivos Android.
+Este repositório apresenta uma suíte de testes de automação de ponta a ponta (E2E) para o **Native Demo App**. Desenvolvida com o framework **WebdriverIO** e a ferramenta **Appium**, a solução visa garantir a qualidade e a estabilidade do aplicativo em dispositivos **Android**.
 
-O objetivo do projeto é validar as funcionalidades do aplicativo, como cadastro, login, navegação e interações com formulários, de forma automatizada e contínua.
+O projeto valida de forma automatizada e contínua funcionalidades essenciais, como login, navegação, interação com formulários e muito mais.
 
-## 🚀 Tecnologias Utilizadas
+**Acesse o [relatório de testes completo](https://mtenorio745.github.io/native-demo-app-automation-webdriverio/) para ver os resultados detalhados.**
 
-* **WebdriverIO**: Framework de automação de testes para Node.js.
-* **Appium**: Ferramenta de automação para aplicativos móveis.
-* **Allure Report**: Adaptador para gerar relatórios de testes ricos em detalhes e gráficos.
-* **Node.js**: Ambiente de execução para o JavaScript.
-* **Android SDK**: Necessário para rodar emuladores Android.
+[](https://www.google.com/search?q=%5Bhttps://mtenorio745.github.io/native-demo-app-automation-webdriverio/%5D\(https://mtenorio745.github.io/native-demo-app-automation-webdriverio/\))
 
-## 📦 Estrutura do Projeto
+-----
 
-* `./apks`: Diretório onde o arquivo `.apk` do aplicativo é armazenado.
-* `./test/specs`: Contém todos os arquivos de especificação de testes (`.spec.js`).
-* `./screen-objects`: Contém os arquivos de "Page Objects" para os testes, organizando os seletores da interface.
-* `./data`: Contém arquivos de dados para os testes (`users.json`, `forms_data.json`).
-* `./.github/workflows`: Contém o fluxo de trabalho (`android.yml`) do GitHub Actions para a execução CI/CD.
+## 🛠️ Tecnologias Utilizadas
 
-## 🔧 Como Rodar os Testes
+  * **WebdriverIO**: Framework de automação de testes para Node.js.
+  * **Appium**: Ferramenta de automação para aplicativos móveis.
+  * **Allure Report**: Adaptador para gerar relatórios visuais e detalhados.
+  * **Node.js**: Ambiente de execução JavaScript.
+  * **Android SDK**: Para rodar os testes em emuladores Android.
+
+-----
+
+## 📂 Estrutura do Projeto
+
+  * `./apks`: Onde o arquivo `.apk` do aplicativo é armazenado.
+  * `./test/specs`: Contém as especificações dos testes (`.spec.js`).
+  * `./screen-objects`: Arquivos de "Page Objects" para organizar os seletores da interface.
+  * `./data`: Dados de teste (ex: `users.json`).
+  * `./.github/workflows`: Fluxo de trabalho do GitHub Actions para CI/CD.
+
+-----
+
+## ⚙️ Como Executar os Testes
 
 ### Pré-requisitos
 
-* Node.js (versão 18 ou superior).
-* Java Development Kit (JDK) (versão 11 ou superior).
-* Android Studio com o Android SDK e as variáveis de ambiente configuradas.
+  * Node.js (versão 18+)
+  * Java Development Kit (JDK) (versão 11+)
+  * Android Studio com o Android SDK e variáveis de ambiente configuradas.
 
 ### Instalação
 
-1.  Clone este repositório:
+1.  Clone o repositório:
     `git clone https://github.com/mtenorio745/native-demo-app-automation-webdriverio.git`
-2.  Acesse o diretório do projeto:
+2.  Acesse a pasta do projeto:
     `cd native-demo-app-automation-webdriverio`
 3.  Instale as dependências:
     `npm install`
 
 ### Execução Local
 
-Para rodar os testes em um emulador local, certifique-se de que o Appium Server está rodando e que o emulador está ligado.
+Certifique-se de que o Appium Server e um emulador local estejam rodando.
 
 `npm run wdio`
 
-### Execução em CI/CD
+### CI/CD
 
-O fluxo de trabalho do GitHub Actions está configurado para rodar automaticamente a cada `push` para a branch `main` ou manualmente através do menu de *workflow_dispatch* na aba **Actions** do repositório.
+O workflow do GitHub Actions executa os testes automaticamente a cada `push` na branch `main` e pode ser acionado manualmente na aba **Actions** do repositório.
 
-## 📊 Relatório Allure
+-----
 
-Após a execução dos testes, um relatório detalhado é gerado e publicado automaticamente no **GitHub Pages**.
+## 📈 Relatório Allure
+
+O relatório de testes é gerado e publicado no **GitHub Pages** a cada execução de CI/CD, oferecendo uma visão clara dos resultados.
+
+**Acesse o [relatório mais recente aqui](https://mtenorio745.github.io/native-demo-app-automation-webdriverio/).**
 
 ### Visualização Local
 
-1.  Certifique-se de ter a ferramenta Allure instalada globalmente:
+1.  Instale a ferramenta Allure globalmente:
     `npm install -g allure-commandline`
 2.  Gere e abra o relatório:
     `npx allure serve allure-results`
 
-### Visualização Online (CI/CD)
+-----
 
-O relatório mais recente pode ser acessado diretamente pelo GitHub Pages. O link está disponível na aba **Settings** > **Pages** do repositório ou no badge no topo deste `README`.
-
-## 🧑 Autor
+## 🧑‍💻 Autor
 
 **Mateus Tenório** - [mtenorio745](https://github.com/mtenorio745)

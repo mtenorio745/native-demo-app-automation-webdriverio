@@ -31,19 +31,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configurar Relatório Allure
-        run: |
-          mkdir -p allure-results
-          echo '{
-            "name": "GitHub Actions",
-            "type": "github",
-            "url": "https://mtenorio745.github.io/native-demo-app-automation-webdriverio/#",
-            "buildUrl": "'"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"'",
-            "reportName": "Relatório de Testes E2E",
-            "buildName": "Workflow Build",
-            "reportUrl": "https://mtenorio745.github.io/native-demo-app-automation-webdriverio/#"
-          }' > allure-results/executor.json
-
       - name: Configurar Ambiente Java
         uses: actions/setup-java@v3
         with:
@@ -67,6 +54,19 @@ jobs:
           arch: x86_64
           profile: ${{ github.event.inputs.android_emulator || 'pixel_5' }}
           script: npm run wdio
+
+      - name: Configurar Relatório Allure
+        run: |
+          mkdir -p allure-results
+          echo '{
+            "name": "GitHub Actions",
+            "type": "github",
+            "url": "https://mtenorio745.github.io/native-demo-app-automation-webdriverio/#",
+            "buildUrl": "'"${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"'",
+            "reportName": "Relatório de Testes E2E",
+            "buildName": "Workflow Build",
+            "reportUrl": "https://mtenorio745.github.io/native-demo-app-automation-webdriverio/#"
+          }' > allure-results/executor.json
 
       - name: Gerar relatório Allure
         if: always()
