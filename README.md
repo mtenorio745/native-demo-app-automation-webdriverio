@@ -16,17 +16,18 @@ O projeto valida de forma automatizada e contínua funcionalidades essenciais, c
 
 ## 🛠️ Tecnologias Utilizadas
 
-  * **WebdriverIO**: Framework de automação de testes para Node.js.
-  * **Appium**: Ferramenta de automação para aplicativos móveis.
-  * **Allure Report**: Adaptador para gerar relatórios visuais e detalhados.
-  * **Node.js**: Ambiente de execução JavaScript.
-  * **Android SDK**: Para rodar os testes em emuladores Android.
+  * **Linguagem**: JavaScript
+  * **Framework**: WebdriverIO
+  * **Biblioteca**: Appium
+  * **Gerenciador de testes**: Mocha
+  * **Asserts**: Chai
+  * **Relatórios**: Allure Report ou ExtentReport
+  * **CI/CD**: GitLab CI/CD
 
 -----
 
 ## 📂 Estrutura do Projeto
 
-  * `./apks`: Onde o arquivo `.apk` do aplicativo é armazenado.
   * `./test/specs`: Contém as especificações dos testes (`.spec.js`).
   * `./screen-objects`: Arquivos de "Page Objects" para organizar os seletores da interface.
   * `./data`: Dados de teste (ex: `users.json`).
@@ -63,7 +64,7 @@ O workflow do GitHub Actions executa os testes automaticamente a cada `push` na 
 
 -----
 
-## 📈 Relatório Allure
+## 📊 Relatório Allure
 
 O relatório de testes é gerado e publicado no **GitHub Pages** a cada execução de CI/CD, oferecendo uma visão clara dos resultados.
 
